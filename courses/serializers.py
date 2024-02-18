@@ -14,6 +14,15 @@ class LessonListSerializer(serializers.Serializer):
     name = serializers.CharField()
 
 
+class CoursePaymentSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    type = serializers.SerializerMethodField()
+    name = serializers.CharField()
+
+    def get_type(self, obj) -> str:
+        return obj._meta.model.__name__.lower()
+
+
 class CourseSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
 
@@ -29,7 +38,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CourseRetrieveSerializer(CourseSerializer):
-    lessons = LessonListSerializer(many=True)
+    lessons = LessonListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course

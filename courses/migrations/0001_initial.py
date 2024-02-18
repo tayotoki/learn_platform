@@ -25,9 +25,7 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=64, verbose_name="Название")),
                 (
                     "preview",
-                    models.ImageField(
-                        upload_to="courses/previews", verbose_name="Превью"
-                    ),
+                    models.ImageField(upload_to="courses/previews", verbose_name="Превью"),
                 ),
                 (
                     "description",
@@ -58,15 +56,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "preview",
-                    models.ImageField(
-                        upload_to="lessons/previews", verbose_name="Превью"
-                    ),
+                    models.ImageField(upload_to="lessons/previews", verbose_name="Превью"),
                 ),
                 (
                     "video_link",
-                    models.URLField(
-                        blank=True, null=True, verbose_name="Ссылка на видео"
-                    ),
+                    models.URLField(blank=True, null=True, verbose_name="Ссылка на видео"),
                 ),
                 (
                     "course",

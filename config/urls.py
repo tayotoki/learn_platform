@@ -13,13 +13,15 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/lessons/", LessonAPIView.as_view(), name="lessons-list"),
-    path("api/lessons/<int:pk>/", LessonDetailAPIView.as_view(), name="lessons-detail")
+    path("api/lessons/<int:pk>/", LessonDetailAPIView.as_view(), name="lessons-detail"),
 ]
 
 if settings.API_DOCS_ENABLE:
-    urlpatterns += (path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-                    path(
-                        "api/docs/",
-                        SpectacularSwaggerView.as_view(url_name="schema"),
-                        name="swagger-ui",
-                    ),)
+    urlpatterns += (
+        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path(
+            "api/docs/",
+            SpectacularSwaggerView.as_view(url_name="schema"),
+            name="swagger-ui",
+        ),
+    )

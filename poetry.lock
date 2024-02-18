@@ -54,6 +54,20 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-filter"
+version = "23.5"
+description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django-filter-23.5.tar.gz", hash = "sha256:67583aa43b91fe8c49f74a832d95f4d8442be628fd4c6d65e9f811f5153a4e5c"},
+    {file = "django_filter-23.5-py3-none-any.whl", hash = "sha256:99122a201d83860aef4fe77758b69dda913e874cc5e0eaa50a86b0b18d708400"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-phonenumber-field"
 version = "7.3.0"
 description = "An international phone number field for django models."
@@ -70,6 +84,20 @@ Django = ">=3.2"
 [package.extras]
 phonenumbers = ["phonenumbers (>=7.0.2)"]
 phonenumberslite = ["phonenumberslite (>=7.0.2)"]
+
+[[package]]
+name = "django-polymorphic"
+version = "3.1.0"
+description = "Seamless polymorphic inheritance for Django models"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-polymorphic-3.1.0.tar.gz", hash = "sha256:d6955b5308bf6e41dcb22ba7c96f00b51dfa497a8a5ab1e9c06c7951bf417bf8"},
+    {file = "django_polymorphic-3.1.0-py3-none-any.whl", hash = "sha256:08bc4f4f4a773a19b2deced5a56deddd1ef56ebd15207bf4052e2901c25ef57e"},
+]
+
+[package.dependencies]
+Django = ">=2.1"
 
 [[package]]
 name = "django-rest-framework"
@@ -534,4 +562,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "98f421e410e6351c29ff2559a9c5970ab4ba230adbfcd5d592618bb8913eb764"
+content-hash = "684c6a62073eec833d6235de4213d328f53d9ecbfe7b8d70725155b08541dece"

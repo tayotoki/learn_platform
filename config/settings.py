@@ -35,9 +35,8 @@ API_DOCS_ENABLE = env("API_DOCS_ENABLE")
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
-
-
 
 # Application definition
 
@@ -48,13 +47,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
-
     # this_project_apps
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
-
+    "payment.apps.PaymentConfig",
     # extra_apps
     "phonenumber_field",
     "drf_spectacular",

@@ -4,21 +4,25 @@ from rest_framework import viewsets, generics
 from rest_framework.pagination import LimitOffsetPagination
 
 from .models import Course, Lesson
-from .serializers import CourseRetrieveSerializer, CourseSerializer, LessonListSerializer, LessonRetrieveSerializer
+from .serializers import (
+    CourseRetrieveSerializer,
+    CourseSerializer,
+    LessonListSerializer,
+    LessonRetrieveSerializer,
+)
+from .filters import BaseCourseFilter
 
 
 # @extend_schema(tags="Courses")
 class CourseViewSet(viewsets.ModelViewSet):
     pagination_class = LimitOffsetPagination
+    filterset_class = BaseCourseFilter
 
     def get_queryset(self):
         queryset = Course.objects.all().select_related("author")
 
         if self.action == self.retrieve.__name__:
-            queryset = (
-                queryset
-                .prefetch_related("lessons")
-            )
+            queryset = queryset.prefetch_related("lessons")
 
         return queryset
 
