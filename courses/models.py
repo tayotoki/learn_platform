@@ -1,5 +1,7 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
+from payment.models import Payment
 from users.models import User
 
 
@@ -10,6 +12,7 @@ class Course(models.Model):
     author = models.ForeignKey(
         User, verbose_name="Автор", on_delete=models.SET_NULL, related_name='courses', null=True
     )
+    payments = GenericRelation(Payment, object_id_field="course_object_id")
 
     class Meta:
         verbose_name = "Курс"
@@ -27,6 +30,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(
         Course, verbose_name="Курс", on_delete=models.CASCADE, related_name='lessons'
     )
+    payments = GenericRelation(Payment, object_id_field="lesson_object_id")
 
     class Meta:
         verbose_name = "Урок"
