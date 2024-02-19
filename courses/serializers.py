@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Course, Lesson
+from .serializers_mixins import ProductTypeMixin
 
 
 class LessonRetrieveSerializer(serializers.ModelSerializer):
@@ -9,18 +10,14 @@ class LessonRetrieveSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LessonListSerializer(serializers.Serializer):
+class LessonListSerializer(ProductTypeMixin, serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
 
 
-class CoursePaymentSerializer(serializers.Serializer):
+class CoursePaymentSerializer(ProductTypeMixin, serializers.Serializer):
     id = serializers.IntegerField()
-    type = serializers.SerializerMethodField()
     name = serializers.CharField()
-
-    def get_type(self, obj) -> str:
-        return obj._meta.model.__name__.lower()
 
 
 class CourseSerializer(serializers.ModelSerializer):

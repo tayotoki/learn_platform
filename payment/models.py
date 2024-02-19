@@ -18,6 +18,7 @@ class Payment(PolymorphicModel):
         "contenttypes.ContentType",
         on_delete=models.CASCADE,
         verbose_name="Оплаченный продукт",
+        limit_choices_to={"app_label": "courses"}
     )
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
