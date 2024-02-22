@@ -33,6 +33,11 @@ class CourseSerializer(serializers.ModelSerializer):
             "author",
         )
 
+    def create(self, validated_data):
+        print(self.context.get("request").user)
+        validated_data["author"] = self.context["request"].user
+        return super().create(validated_data)
+
 
 class CourseRetrieveSerializer(CourseSerializer):
     lessons = LessonListSerializer(many=True, read_only=True)

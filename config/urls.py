@@ -1,19 +1,17 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-
-from django.conf import settings
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from .routers import router
-
 from courses.views import LessonAPIView, LessonDetailAPIView
-
+from .routers import router
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/lessons/", LessonAPIView.as_view(), name="lessons-list"),
     path("api/lessons/<int:pk>/", LessonDetailAPIView.as_view(), name="lessons-detail"),
+    path("users/", include("users.urls", namespace="users")),
 ]
 
 if settings.API_DOCS_ENABLE:
