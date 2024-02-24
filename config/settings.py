@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "courses.apps.CoursesConfig",
     "payment.apps.PaymentConfig",
+    "subscription.apps.SubscriptionConfig",
     # extra_apps
     "phonenumber_field",
     "drf_spectacular",

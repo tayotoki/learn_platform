@@ -1,32 +1,120 @@
+from django.db.models import Prefetch, OuterRef, QuerySet
+from django.utils import timezone
 from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import viewsets, generics
-from rest_framework.pagination import LimitOffsetPagination
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, OpenApiResponse
+from rest_framework import viewsets, generics, mixins, status, serializers
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from subscription.models import CourseSubscription
 from users.permissions import IsOwnerOrManager
 from .filters import BaseCourseFilter
-from .models import Lesson
+from .models import Lesson, Course
+from .querysets import CourseQuerySet
 from .serializers import (
     CourseRetrieveSerializer,
     CourseSerializer,
     LessonListSerializer,
     LessonRetrieveSerializer,
+    LessonCreateSerializer,
 )
 from .viewsets_mixins import UserLimitedOrManagerAllMixin
+from .pagination import CourseLessonPagination
 
 
 @extend_schema(tags=["Courses"])
 class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
-    pagination_class = LimitOffsetPagination
+    pagination_class = CourseLessonPagination
     filterset_class = BaseCourseFilter
     permission_classes = [IsOwnerOrManager]
 
+    @extend_schema(
+        tags=["Courses"],
+        parameters=[
+            OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH),
+        ],
+        responses={
+            status.HTTP_201_CREATED: OpenApiResponse(
+                description="Подписка оформлена успешно",
+            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                description="У вас уже есть активная подписка на этот курс",
+            ),
+        },
+        request=None,
+    )
+    @action(detail=True, methods=["POST"], url_path="subscribe")
+    def subscribe(self, request, pk=None) -> Response:
+        """
+        Оформление подписки на курс, можно отправлять пустой request_body
+        """
+
+        course = self.get_object()
+        user = request.user
+
+        subscription, is_created = CourseSubscription.objects.get_or_create(
+            course=course, user=user, is_active=True
+        )
+
+        if is_created:
+            subscription.active_since = timezone.now()
+            subscription.save(update_fields=["active_since"])
+            
+            return Response(
+                {"message": "Вы успешно подписались на курс."}, status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(
+                {"message": "У вас уже есть активная подписка на этот курс."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+    @extend_schema(
+        tags=["Courses"],
+        parameters=[
+            OpenApiParameter(name="id", type=int, location=OpenApiParameter.PATH),
+        ],
+        responses={
+            status.HTTP_204_NO_CONTENT: OpenApiResponse(
+                description="Подписка отменена",
+            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                description="Отсутствует активная подписка на данный курс",
+            ),
+        },
+        request=None,
+    )
+    @action(detail=True, methods=["DELETE"], url_path="unsubscribe")
+    def unsubscribe(self, request, pk=None) -> Response:
+        """
+        Отмена подписки на курс
+        """
+
+        subscription = CourseSubscription.objects.filter(
+            course=self.get_object(),
+            user=request.user,
+            is_active=True
+        )
+
+        status_code = status.HTTP_400_BAD_REQUEST
+
+        if subscription.exists():
+            subscription.delete()
+            status_code = status.HTTP_204_NO_CONTENT
+
+        return Response(status=status_code)
+
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset: QuerySet[Course] = super().get_queryset()
 
         if self.action == self.retrieve.__name__:
-            queryset = queryset.prefetch_related("lessons")
+            queryset: CourseQuerySet = queryset.prefetch_related(
+                "lessons",
+                Prefetch(
+                    "subscriptions",
+                    queryset=CourseSubscription.objects.filter(course_id=self.kwargs["pk"]),
+                ),
+            ).annotate_subscribe(user_id=self.request.user.id)
 
         return queryset
 
@@ -40,9 +128,9 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
 
 
 @extend_schema(tags=["Lessons"])
-class LessonAPIView(generics.ListAPIView):
+class LessonAPIView(generics.ListCreateAPIView):
     serializer_class = LessonListSerializer
-    pagination_class = LimitOffsetPagination
+    pagination_class = CourseLessonPagination
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
@@ -57,7 +145,7 @@ class LessonAPIView(generics.ListAPIView):
         ],
     )
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = Lesson.objects.all().select_related("course")
@@ -67,6 +155,16 @@ class LessonAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
 
         return queryset
+
+    def get_serializer_class(self):
+        self.action_ = self.request.method.lower()
+        serializer_class = self.__class__.serializer_class
+
+        match self.action_:
+            case self.post.__name__:
+                serializer_class = LessonCreateSerializer
+
+        return serializer_class
 
 
 @extend_schema(tags=["Lessons"])

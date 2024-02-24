@@ -9,9 +9,8 @@ from .routers import router
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
-    path("api/lessons/", LessonAPIView.as_view(), name="lessons-list"),
-    path("api/lessons/<int:pk>/", LessonDetailAPIView.as_view(), name="lessons-detail"),
     path("users/", include("users.urls", namespace="users")),
+    path("api/lessons/", include("courses.urls", namespace="courses")),
 ]
 
 if settings.API_DOCS_ENABLE:

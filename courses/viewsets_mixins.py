@@ -17,4 +17,4 @@ class UserLimitedOrManagerAllMixin:
             if not self.request.user.groups.filter(name='managers').exists():
                 queryset = queryset.filter(author=self.request.user)
 
-            return queryset
+        return queryset

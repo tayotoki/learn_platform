@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
+from courses.querysets import CourseQuerySet
 from payment.models import Payment
 from users.models import User
 
@@ -13,6 +14,8 @@ class Course(models.Model):
         User, verbose_name="Автор", on_delete=models.SET_NULL, related_name='courses', null=True
     )
     payments = GenericRelation(Payment, object_id_field="course_object_id")
+
+    objects = CourseQuerySet.as_manager()
 
     class Meta:
         verbose_name = "Курс"
