@@ -107,7 +107,7 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset: QuerySet[Course] = super().get_queryset()
 
-        if self.action == self.retrieve.__name__:
+        if self.action == self.retrieve.__name__:  # noqa
             queryset: CourseQuerySet = (
                 queryset.prefetch_related(
                     "lessons",
