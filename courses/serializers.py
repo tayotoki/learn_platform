@@ -50,6 +50,7 @@ class CoursePaymentSerializer(ProductTypeMixin, serializers.Serializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
+    lessons_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Course
@@ -59,6 +60,7 @@ class CourseSerializer(serializers.ModelSerializer):
             "description",
             "preview",
             "author",
+            "lessons_count",
         )
 
     def create(self, validated_data):

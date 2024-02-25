@@ -120,6 +120,13 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
                 .annotate_lessons_count()
             )
 
+        if self.action == self.list.__name__:  # noqa
+            queryset: CourseQuerySet = (
+                queryset
+                .prefetch_related("lessons")
+                .annotate_lessons_count()
+            )
+
         return queryset
 
     def get_serializer_class(self):
