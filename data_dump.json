@@ -208,6 +208,45 @@
     }
   },
   {
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+      "action_time": "2024-02-22T20:57:43.380Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "6",
+      "object_repr": "Kotlin-разработчик",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"\\u0410\\u0432\\u0442\\u043e\\u0440\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+      "action_time": "2024-02-22T20:57:48.821Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "5",
+      "object_repr": "Java-разработчик",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"\\u0410\\u0432\\u0442\\u043e\\u0440\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+      "action_time": "2024-02-22T20:57:54.435Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "Java-разработчик",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"\\u0410\\u0432\\u0442\\u043e\\u0440\"]}}]"
+    }
+  },
+  {
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -532,6 +571,42 @@
     }
   },
   {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add Подписка на курс",
+      "content_type": 10,
+      "codename": "add_coursesubscription"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change Подписка на курс",
+      "content_type": 10,
+      "codename": "change_coursesubscription"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete Подписка на курс",
+      "content_type": 10,
+      "codename": "delete_coursesubscription"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view Подписка на курс",
+      "content_type": 10,
+      "codename": "view_coursesubscription"
+    }
+  },
+  {
     "model": "auth.group",
     "pk": 1,
     "fields": {
@@ -619,6 +694,22 @@
     }
   },
   {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+      "app_label": "subscription",
+      "model": "coursesubscription"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "8aur57039qkg99pu1jg0cxy7teqq0zmh",
+    "fields": {
+      "session_data": ".eJxVjDsOwyAQBe9CHaFdzMekTO8zIGAhOIlAMnYV5e4RkoukfTPz3sz5Yy_u6GlzK7ErQ3b53YKPz1QHoIev98Zjq_u2Bj4UftLOl0bpdTvdv4Piexk1JSKjtEkIE5iYTLAQrADIHrMAmeOMEMlqZdFLhZaUIMg6TkFJObPPF-p8N5k:1rdG8B:UH7QCfya4AiHxvjQs4pW8u8GgiGFFvN8U8Xq_aCx2v8",
+      "expire_date": "2024-03-07T20:57:23.975Z"
+    }
+  },
+  {
     "model": "sessions.session",
     "pk": "jn4clhlq4ub1ojgbymvpuzuppv8v7xqq",
     "fields": {
@@ -635,19 +726,11 @@
     }
   },
   {
-    "model": "sessions.session",
-    "pk": "wz9p9il8fqsw6y9owabugmwelmztrg7e",
-    "fields": {
-      "session_data": ".eJxVjEEOwiAQRe_C2pCBIgWX7nsGMgyDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwJ3ERSpx-t4j04LqDdMd6a5JaXZc5yl2RB-1yaomf18P9OyjYy7cmA6NiD-Y8KHI2s8-sMZo4QAQHOYFi1KQMZ6e9YY8ONYxWD9YxJRbvD930N_c:1rd5sj:bWfmQUw4rn7Xrcpzs8fA1ic-vPlAp-e5Zh7vw2i2cUE",
-      "expire_date": "2024-03-07T10:00:45.975Z"
-    }
-  },
-  {
     "model": "users.user",
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$600000$AQFbGYBDmacEGxFOeiR0wf$nuZxJB2mcBXKSd1dPJJQFi8RcUvZ47hNFa3HxTULydI=",
-      "last_login": "2024-02-19T04:17:09.202Z",
+      "last_login": "2024-02-22T20:57:23.973Z",
       "is_superuser": true,
       "first_name": "",
       "last_name": "",
@@ -759,7 +842,7 @@
       "name": "Java-разработчик",
       "preview": "",
       "description": "Новый курс для Java-разработчиков",
-      "author": null
+      "author": 3
     }
   },
   {
@@ -769,7 +852,7 @@
       "name": "Java-разработчик",
       "preview": "",
       "description": "Новый курс для Java-разработчиков",
-      "author": null
+      "author": 4
     }
   },
   {
@@ -779,7 +862,7 @@
       "name": "Kotlin-разработчик",
       "preview": "",
       "description": "Описание курса для мобильной разработки",
-      "author": null
+      "author": 4
     }
   },
   {
@@ -853,6 +936,26 @@
       "object_id": 1,
       "amount": "1500.00",
       "type": "cash"
+    }
+  },
+  {
+    "model": "subscription.coursesubscription",
+    "pk": 2,
+    "fields": {
+      "course": 2,
+      "user": 1,
+      "is_active": true,
+      "active_since": null
+    }
+  },
+  {
+    "model": "subscription.coursesubscription",
+    "pk": 3,
+    "fields": {
+      "course": 1,
+      "user": 1,
+      "is_active": true,
+      "active_since": "2024-02-23"
     }
   }
 ]

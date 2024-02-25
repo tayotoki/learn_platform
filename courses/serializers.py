@@ -67,6 +67,10 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CourseRetrieveSerializer(CourseSerializer):
+    """
+    Получение детальной информации о курсе
+    """
+
     lessons = LessonListSerializer(many=True, read_only=True)
     is_subscribed = serializers.BooleanField(read_only=True)
     lessons_count = serializers.IntegerField(read_only=True)
