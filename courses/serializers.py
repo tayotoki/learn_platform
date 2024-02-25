@@ -69,7 +69,8 @@ class CourseSerializer(serializers.ModelSerializer):
 class CourseRetrieveSerializer(CourseSerializer):
     lessons = LessonListSerializer(many=True, read_only=True)
     is_subscribed = serializers.BooleanField(read_only=True)
+    lessons_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Course
-        fields = CourseSerializer.Meta.fields + ("lessons", "is_subscribed")
+        fields = CourseSerializer.Meta.fields + ("lessons", "is_subscribed", "lessons_count")

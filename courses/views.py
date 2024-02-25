@@ -108,13 +108,17 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
         queryset: QuerySet[Course] = super().get_queryset()
 
         if self.action == self.retrieve.__name__:
-            queryset: CourseQuerySet = queryset.prefetch_related(
-                "lessons",
-                Prefetch(
-                    "subscriptions",
-                    queryset=CourseSubscription.objects.filter(course_id=self.kwargs["pk"]),
-                ),
-            ).annotate_subscribe(user_id=self.request.user.id)
+            queryset: CourseQuerySet = (
+                queryset.prefetch_related(
+                    "lessons",
+                    Prefetch(
+                        "subscriptions",
+                        queryset=CourseSubscription.objects.filter(course_id=self.kwargs["pk"]),
+                    ),
+                )
+                .annotate_subscribe(user_id=self.request.user.id)
+                .annotate_lessons_count()
+            )
 
         return queryset
 

@@ -1,4 +1,4 @@
-from django.db.models import QuerySet, Exists, OuterRef
+from django.db.models import QuerySet, Exists, OuterRef, Count
 
 from subscription.models import CourseSubscription
 
@@ -13,4 +13,9 @@ class CourseQuerySet(QuerySet):
                     is_active=True
                 )
             )
+        )
+
+    def annotate_lessons_count(self) -> "QuerySet":
+        return self.annotate(
+            lessons_count=Count("lessons")
         )
