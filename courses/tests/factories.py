@@ -1,4 +1,5 @@
 import factory
+from django.contrib.auth.hashers import make_password
 from factory.django import DjangoModelFactory
 from pytest_factoryboy import register
 
@@ -11,6 +12,7 @@ class UserFactory(DjangoModelFactory):
         model = User
 
     email = factory.Sequence(lambda n: f'user{n}@example.com')
+    password = factory.LazyFunction(lambda: make_password('password'))
     city = factory.Faker('city')
 
 
@@ -28,22 +30,14 @@ class LessonFactory(DjangoModelFactory):
 
     name = factory.Sequence(lambda n: f'Lesson {n}')
     course = factory.SubFactory(CourseFactory)
+    author = factory.SubFactory(UserFactory)
 
 
 class CourseSubscriptionFactory(DjangoModelFactory):
     class Meta:
         model = CourseSubscription
 
+    course = factory.SubFactory(CourseFactory)
     user = factory.SubFactory(UserFactory)
-    is_active = factory.Faker('boolean')
-    active_since = factory.Faker('date_this_decade')
-
-    @factory.lazy_attribute
-    def course(self):
-        return CourseFactory()
-
-
-register(UserFactory)
-register(CourseFactory)
-register(LessonFactory)
-register(CourseSubscriptionFactory)
+    is_active = True
+    active_since = factory.Faker('date')
