@@ -45,7 +45,7 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
         request=None,
     )
     @action(detail=True, methods=["POST"], url_path="subscribe")
-    def subscribe(self, request, pk=None) -> Response:
+    def subscribe(self, request, *args, **kwargs) -> Response:
         """
         Оформление подписки на курс, можно отправлять пустой request_body
         """
@@ -69,6 +69,7 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
                 {"message": "У вас уже есть активная подписка на этот курс."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
     @extend_schema(
         tags=["Courses"],
         parameters=[
@@ -85,15 +86,19 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
         request=None,
     )
     @action(detail=True, methods=["DELETE"], url_path="unsubscribe")
-    def unsubscribe(self, request, pk=None) -> Response:
+    def unsubscribe(self, request, *args, **kwargs) -> Response:
         """
         Отмена подписки на курс
         """
 
-        subscription = CourseSubscription.objects.filter(
-            course=self.get_object(),
-            user=request.user,
-            is_active=True
+        subscription = (
+            CourseSubscription.objects
+            .filter(
+                course=self.get_object(),
+                user=request.user,
+                is_active=True
+            )
+            .select_related("user", "course")
         )
 
         status_code = status.HTTP_400_BAD_REQUEST
