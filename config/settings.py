@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from envparse import env
@@ -20,6 +20,10 @@ ENV_PATH = BASE_DIR / '.env'
 
 if ENV_PATH.exists():
     env.read_envfile(ENV_PATH)
+
+LOGS_DIR = BASE_DIR / 'logs'
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -162,20 +166,41 @@ STRIPE_API_KEY = env("STRIPE_API_KEY")
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'standard',
         },
+        'error_file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'myapp.log',
+            'formatter': 'standard',
+        },
+        'info_file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'info_payment.log',
+            'formatter': 'standard'
+        }
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
+    # 'root': {
+    #     'handlers': ['console'],
+    #     'level': 'INFO',
+    # },
     'loggers': {
         'payment.service.service_selector': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+            'handlers': ['error_file'],
+            'level': 'ERROR',
             'propagate': True,
+        },
+        'stripe': {
+            'handlers': ['info_file'],
+            'level': 'DEBUG',
+            'propagate': True
         },
     },
 }
