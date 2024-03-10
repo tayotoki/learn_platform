@@ -28,23 +28,23 @@ def use_service(service_name: str = None):
         @functools.wraps(method)
         def wrapper(view, *args, **kwargs):
             BAD_REQUEST = Response(status=status.HTTP_400_BAD_REQUEST)  # noqa
+            data = method(view, *args, **kwargs)
+            headers = view.get_success_headers(data)
 
             match service_name:
                 case PaymentServicesType.STRIPE:
                     try:
-                        data = method(view, *args, **kwargs)
                         session = stripe_service.create_checkout_session(validated_data=data)
-                        headers = view.get_success_headers(data)
                         return Response(
-                                {
-                                    "url": session.url,
-                                    "session_id": session.id,
-                                    "payment_intent": session.payment_intent,
-                                    "metadata": session.metadata,
-                                },
-                                status=status.HTTP_201_CREATED,
-                                headers=headers
-                            )
+                                    {
+                                        "url": session.url,
+                                        "session_id": session.id,
+                                        "payment_intent": session.payment_intent,
+                                        "metadata": session.metadata,
+                                    },
+                                    status=status.HTTP_201_CREATED,
+                                    headers=headers
+                                )
                     except Exception as e:
                         logger.exception(e)
                         return BAD_REQUEST
