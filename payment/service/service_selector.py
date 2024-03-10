@@ -3,12 +3,15 @@
 
 import functools
 import logging
+from typing import Optional
 
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer, BaseSerializer
 
 from . import StripePaymentService
 from ..constants import PaymentServicesType
@@ -52,16 +55,28 @@ def use_service(service_name: str = None):
     return decorator
 
 
-def use_payment_service(service_name: str = None):
+def use_payment_service(service_name: Optional[PaymentServicesType] = None,
+                        payment_serializer: Optional[BaseSerializer] = None):
     def class_decorator(view_cls):
         class ServiceSelector(view_cls):
+            PAYMENT_SERIALIZER = payment_serializer
+
             def get_serializer_class(self):
                 serializer_class = self.serializer_class
 
                 if self.action == self.make_payment.__name__:
-                    serializer_class = PaymentSerializer
+                    serializer_class = self.PAYMENT_SERIALIZER
 
                 return serializer_class
+
+            def get_permissions(self):
+                permissions = self.permission_classes
+
+                match self.action:
+                    case self.make_payment.__name__ | self.get_payment_status.__name__:
+                        permissions = [IsAuthenticated]
+
+                return [permission() for permission in permissions]
 
             @use_service(service_name=service_name)
             @action(detail=False, methods=["POST"])

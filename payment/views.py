@@ -15,7 +15,8 @@ from .service.service_selector import use_payment_service
 
 
 @extend_schema(tags=["Payments"])
-@use_payment_service(service_name=PaymentServicesType.STRIPE)
+@use_payment_service(service_name=PaymentServicesType.STRIPE,
+                     payment_serializer=PaymentSerializer) # noqa
 class PaymentViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
