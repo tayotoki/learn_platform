@@ -1,6 +1,6 @@
 ## Создать файл ```.env```
 
-    SECRET_KEY="django-insecure-&lz)l^-n14_aj3!4@(p)#e7r$z1ze18^b$-w90ny@jx(#+3a!("
+    SSECRET_KEY="django-insecure-&lz)l^-n14_aj3!4@(p)#e7r$z1ze18^b$-w90ny@jx(#+3a!("
 
     # POSTGRESQL
     DB_NAME=courses
@@ -11,6 +11,9 @@
     
     # SWAGGER_UI
     API_DOCS_ENABLE=True
+    
+    # STRIPE
+    STRIPE_API_KEY=sk_test_51OrDzYJHaROG4J4k6q3hNwudW7FSoTjNhPKSdg2dXoHXcZkfA8WzCTLeLO5isKMucOSydvF6lJGf04J4nPKyLirv00aRrsxAPb
 
 ## Наполнение базы данных из фикстуры
 
