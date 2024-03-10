@@ -7,5 +7,9 @@ class PaymentType(TextChoices):
 
 
 class PaymentContentType(TextChoices):
-    COURSE = "course", "курс"
-    LESSON = "lesson", "урок"
+    COURSE = "course", "курсы"
+    LESSON = "lesson", "уроки"
+
+
+class PaymentServicesType(TextChoices):
+    STRIPE = "stripe", "страйп"

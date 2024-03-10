@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from courses.views import LessonAPIView, LessonDetailAPIView
 from .routers import router
 
 urlpatterns = [
@@ -11,6 +10,7 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("users/", include("users.urls", namespace="users")),
     path("api/lessons/", include("courses.urls", namespace="courses")),
+    path('payment_update/', include("payment.urls", namespace="payment")),
 ]
 
 if settings.API_DOCS_ENABLE:

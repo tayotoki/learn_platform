@@ -1,3 +1,7 @@
+from datetime import timedelta
+from typing import Type
+
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Prefetch, OuterRef, QuerySet
 from django.utils import timezone
 from drf_spectacular.types import OpenApiTypes
@@ -8,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from subscription.models import CourseSubscription
+from users.models import User
 from users.permissions import IsOwnerOrManager
 from .filters import BaseCourseFilter
 from .models import Lesson, Course
@@ -28,6 +33,7 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
     pagination_class = CourseLessonPagination
     filterset_class = BaseCourseFilter
     permission_classes = [IsOwnerOrManager]
+    queryset = Course.objects.all()
 
     @extend_schema(
         tags=["Courses"],
@@ -64,11 +70,11 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
             return Response(
                 {"message": "Вы успешно подписались на курс."}, status=status.HTTP_201_CREATED,
             )
-        else:
-            return Response(
-                {"message": "У вас уже есть активная подписка на этот курс."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+
+        return Response(
+            {"message": "У вас уже есть активная подписка на этот курс."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
     @extend_schema(
         tags=["Courses"],
@@ -109,19 +115,22 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
 
         return Response(status=status_code)
 
-    def get_queryset(self):
-        queryset: QuerySet[Course] = super().get_queryset()
+    def get_queryset(self) -> CourseQuerySet:
+        queryset: CourseQuerySet = super().get_queryset()
 
         if self.action == self.retrieve.__name__:  # noqa
+            course_id: int = self.kwargs["pk"]
+            user: User | AnonymousUser = self.request.user
+
             queryset: CourseQuerySet = (
                 queryset.prefetch_related(
                     "lessons",
                     Prefetch(
                         "subscriptions",
-                        queryset=CourseSubscription.objects.filter(course_id=self.kwargs["pk"]),
+                        queryset=CourseSubscription.objects.filter(course_id=course_id),
                     ),
                 )
-                .annotate_subscribe(user_id=self.request.user.id)
+                .annotate_subscribe(user=user)
                 .annotate_lessons_count()
             )
 
@@ -134,7 +143,7 @@ class CourseViewSet(UserLimitedOrManagerAllMixin, viewsets.ModelViewSet):
 
         return queryset
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> Type[CourseSerializer | CourseRetrieveSerializer]:
         serializer_class = CourseSerializer
 
         if self.action == self.retrieve.__name__:

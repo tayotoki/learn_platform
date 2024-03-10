@@ -298,6 +298,7 @@ CREATE TABLE public.payment_payment (
     content_type_id integer NOT NULL,
     polymorphic_ctype_id integer,
     user_id bigint NOT NULL,
+    is_confirmed boolean NOT NULL,
     CONSTRAINT payment_payment_object_id_check CHECK ((object_id >= 0))
 );
 
@@ -507,46 +508,46 @@ INSERT INTO public.auth_permission VALUES (40, 'Can view Подписка на �
 -- Data for Name: courses_course; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.courses_course VALUES (2, 'Курс 2', 'courses/previews/Снимок_экрана_от_2024-02-14_15-21-56.png', 'Описание 2', 1);
 INSERT INTO public.courses_course VALUES (1, 'Новое имя курса', 'courses/previews/Снимок_экрана_от_2024-02-15_20-13-14.png', 'Описание 1', 1);
+INSERT INTO public.courses_course VALUES (2, 'Курс 2', 'courses/previews/Снимок_экрана_от_2024-02-14_15-21-56.png', 'Описание 2', 1);
 INSERT INTO public.courses_course VALUES (3, 'Python-разработчик', '', 'Описание курса для пайтон-разработчиков', NULL);
-INSERT INTO public.courses_course VALUES (7, 'Kotlin-разработчик', '', 'Описание курса для мобильной разработки', 1);
-INSERT INTO public.courses_course VALUES (6, 'Kotlin-разработчик', '', 'Описание курса для мобильной разработки', 4);
-INSERT INTO public.courses_course VALUES (5, 'Java-разработчик', '', 'Новый курс для Java-разработчиков', 4);
 INSERT INTO public.courses_course VALUES (4, 'Java-разработчик', '', 'Новый курс для Java-разработчиков', 3);
+INSERT INTO public.courses_course VALUES (5, 'Java-разработчик', '', 'Новый курс для Java-разработчиков', 4);
+INSERT INTO public.courses_course VALUES (6, 'Kotlin-разработчик', '', 'Описание курса для мобильной разработки', 4);
+INSERT INTO public.courses_course VALUES (7, 'Kotlin-разработчик', '', 'Описание курса для мобильной разработки', 1);
 
 
 --
 -- Data for Name: courses_lesson; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.courses_lesson VALUES (2, 'математика', 'урок математики', 'lessons/previews/Снимок_экрана_от_2024-02-14_14-14-41.png', 'https://www.youtube.com/watch?v=Gp4yiYYSyXo&ab_channel=ArnKratos', 2, 1);
 INSERT INTO public.courses_lesson VALUES (1, 'русский', 'русский язык', 'lessons/previews/Снимок_экрана_от_2024-02-14_12-39-07.png', 'https://www.youtube.com/watch?v=Gp4yiYYSyXo&ab_channel=ArnKratos', 1, 1);
+INSERT INTO public.courses_lesson VALUES (2, 'математика', 'урок математики', 'lessons/previews/Снимок_экрана_от_2024-02-14_14-14-41.png', 'https://www.youtube.com/watch?v=Gp4yiYYSyXo&ab_channel=ArnKratos', 2, 1);
 
 
 --
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.django_admin_log VALUES (1, '2024-02-16 00:48:47.717134+05', '1', 'Курс 1', 1, '[{"added": {}}]', 7, 1);
-INSERT INTO public.django_admin_log VALUES (2, '2024-02-16 00:49:03.421294+05', '2', 'Курс 2', 1, '[{"added": {}}]', 7, 1);
-INSERT INTO public.django_admin_log VALUES (3, '2024-02-16 00:49:46.895142+05', '1', 'русский', 1, '[{"added": {}}]', 8, 1);
-INSERT INTO public.django_admin_log VALUES (4, '2024-02-16 00:50:08.490987+05', '2', 'математика', 1, '[{"added": {}}]', 8, 1);
-INSERT INTO public.django_admin_log VALUES (5, '2024-02-18 20:11:44.106339+05', '1', 'Payment object (1)', 1, '[{"added": {}}]', 9, 1);
-INSERT INTO public.django_admin_log VALUES (6, '2024-02-19 00:06:14.031832+05', '2', 'Payment object (2)', 1, '[{"added": {}}]', 9, 1);
-INSERT INTO public.django_admin_log VALUES (7, '2024-02-19 09:17:18.106699+05', '2', 'Payment object (2)', 3, '', 9, 1);
-INSERT INTO public.django_admin_log VALUES (8, '2024-02-19 09:18:21.919384+05', '3', 'Payment object (3)', 1, '[{"added": {}}]', 9, 1);
-INSERT INTO public.django_admin_log VALUES (9, '2024-02-19 09:18:41.606083+05', '4', 'Payment object (4)', 1, '[{"added": {}}]', 9, 1);
-INSERT INTO public.django_admin_log VALUES (10, '2024-02-22 14:47:14.752057+05', '4', 'putilov.konstantin@gmail.com', 1, '[{"added": {}}]', 6, 1);
-INSERT INTO public.django_admin_log VALUES (11, '2024-02-22 14:49:30.668204+05', '4', 'putilov.konstantin@gmail.com', 2, '[]', 6, 1);
-INSERT INTO public.django_admin_log VALUES (12, '2024-02-22 14:49:47.470189+05', '4', 'putilov.konstantin@gmail.com', 2, '[]', 6, 1);
-INSERT INTO public.django_admin_log VALUES (13, '2024-02-22 15:00:45.970426+05', '4', 'putilov.konstantin@gmail.com', 2, '[{"changed": {"fields": ["password"]}}]', 6, 1);
-INSERT INTO public.django_admin_log VALUES (14, '2024-02-22 16:19:18.807915+05', '1', 'managers', 1, '[{"added": {}}]', 3, 1);
-INSERT INTO public.django_admin_log VALUES (15, '2024-02-22 16:19:44.574806+05', '2', 'математика', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 8, 1);
-INSERT INTO public.django_admin_log VALUES (16, '2024-02-22 16:19:47.88716+05', '1', 'русский', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 8, 1);
-INSERT INTO public.django_admin_log VALUES (17, '2024-02-23 01:57:43.380518+05', '6', 'Kotlin-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
-INSERT INTO public.django_admin_log VALUES (18, '2024-02-23 01:57:48.821126+05', '5', 'Java-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
-INSERT INTO public.django_admin_log VALUES (19, '2024-02-23 01:57:54.435528+05', '4', 'Java-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
+INSERT INTO public.django_admin_log VALUES (1, '2024-02-16 00:48:47.717+05', '1', 'Курс 1', 1, '[{"added": {}}]', 7, 1);
+INSERT INTO public.django_admin_log VALUES (2, '2024-02-16 00:49:03.421+05', '2', 'Курс 2', 1, '[{"added": {}}]', 7, 1);
+INSERT INTO public.django_admin_log VALUES (3, '2024-02-16 00:49:46.895+05', '1', 'русский', 1, '[{"added": {}}]', 8, 1);
+INSERT INTO public.django_admin_log VALUES (4, '2024-02-16 00:50:08.49+05', '2', 'математика', 1, '[{"added": {}}]', 8, 1);
+INSERT INTO public.django_admin_log VALUES (5, '2024-02-18 20:11:44.106+05', '1', 'Payment object (1)', 1, '[{"added": {}}]', 9, 1);
+INSERT INTO public.django_admin_log VALUES (6, '2024-02-19 00:06:14.031+05', '2', 'Payment object (2)', 1, '[{"added": {}}]', 9, 1);
+INSERT INTO public.django_admin_log VALUES (7, '2024-02-19 09:17:18.106+05', '2', 'Payment object (2)', 3, '', 9, 1);
+INSERT INTO public.django_admin_log VALUES (8, '2024-02-19 09:18:21.919+05', '3', 'Payment object (3)', 1, '[{"added": {}}]', 9, 1);
+INSERT INTO public.django_admin_log VALUES (9, '2024-02-19 09:18:41.606+05', '4', 'Payment object (4)', 1, '[{"added": {}}]', 9, 1);
+INSERT INTO public.django_admin_log VALUES (10, '2024-02-22 14:47:14.752+05', '4', 'putilov.konstantin@gmail.com', 1, '[{"added": {}}]', 6, 1);
+INSERT INTO public.django_admin_log VALUES (11, '2024-02-22 14:49:30.668+05', '4', 'putilov.konstantin@gmail.com', 2, '[]', 6, 1);
+INSERT INTO public.django_admin_log VALUES (12, '2024-02-22 14:49:47.47+05', '4', 'putilov.konstantin@gmail.com', 2, '[]', 6, 1);
+INSERT INTO public.django_admin_log VALUES (13, '2024-02-22 15:00:45.97+05', '4', 'putilov.konstantin@gmail.com', 2, '[{"changed": {"fields": ["password"]}}]', 6, 1);
+INSERT INTO public.django_admin_log VALUES (14, '2024-02-22 16:19:18.807+05', '1', 'managers', 1, '[{"added": {}}]', 3, 1);
+INSERT INTO public.django_admin_log VALUES (15, '2024-02-22 16:19:44.574+05', '2', 'математика', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 8, 1);
+INSERT INTO public.django_admin_log VALUES (16, '2024-02-22 16:19:47.887+05', '1', 'русский', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 8, 1);
+INSERT INTO public.django_admin_log VALUES (17, '2024-02-23 01:57:43.38+05', '6', 'Kotlin-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
+INSERT INTO public.django_admin_log VALUES (18, '2024-02-23 01:57:48.821+05', '5', 'Java-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
+INSERT INTO public.django_admin_log VALUES (19, '2024-02-23 01:57:54.435+05', '4', 'Java-разработчик', 2, '[{"changed": {"fields": ["\u0410\u0432\u0442\u043e\u0440"]}}]', 7, 1);
 
 
 --
@@ -598,24 +599,40 @@ INSERT INTO public.django_migrations VALUES (26, 'payment', '0003_alter_payment_
 INSERT INTO public.django_migrations VALUES (27, 'payment', '0004_alter_payment_amount', '2024-02-22 16:21:13.653158+05');
 INSERT INTO public.django_migrations VALUES (28, 'courses', '0004_alter_course_preview_alter_lesson_preview', '2024-02-22 16:50:18.811673+05');
 INSERT INTO public.django_migrations VALUES (29, 'subscription', '0001_initial', '2024-02-22 23:48:33.979287+05');
+INSERT INTO public.django_migrations VALUES (30, 'payment', '0005_payment_is_confirmed', '2024-03-09 00:52:45.814426+05');
 
 
 --
 -- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.django_session VALUES ('jn4clhlq4ub1ojgbymvpuzuppv8v7xqq', '.eJxVjEEOwiAQRe_C2pCBIgWX7nsGMgyDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwJ3ERSpx-t4j04LqDdMd6a5JaXZc5yl2RB-1yaomf18P9OyjYy7cmA6NiD-Y8KHI2s8-sMZo4QAQHOYFi1KQMZ6e9YY8ONYxWD9YxJRbvD930N_c:1rahiD:LU0moQnQqPgh_B_xlMfgapijJiLsJfzYEwy1fT05f2k', '2024-03-01 00:48:01.688931+05');
-INSERT INTO public.django_session VALUES ('kyq4axqu5shwg4mq0rr16finxhb0rgl2', '.eJxVjEEOwiAQRe_C2pCBIgWX7nsGMgyDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwJ3ERSpx-t4j04LqDdMd6a5JaXZc5yl2RB-1yaomf18P9OyjYy7cmA6NiD-Y8KHI2s8-sMZo4QAQHOYFi1KQMZ6e9YY8ONYxWD9YxJRbvD930N_c:1rbv5Z:9xkpb_Oi5rzYu5Ao8CPP1cnSxKVSZq42ywVAeNjq7Go', '2024-03-04 09:17:09.204778+05');
-INSERT INTO public.django_session VALUES ('8aur57039qkg99pu1jg0cxy7teqq0zmh', '.eJxVjDsOwyAQBe9CHaFdzMekTO8zIGAhOIlAMnYV5e4RkoukfTPz3sz5Yy_u6GlzK7ErQ3b53YKPz1QHoIev98Zjq_u2Bj4UftLOl0bpdTvdv4Piexk1JSKjtEkIE5iYTLAQrADIHrMAmeOMEMlqZdFLhZaUIMg6TkFJObPPF-p8N5k:1rdG8B:UH7QCfya4AiHxvjQs4pW8u8GgiGFFvN8U8Xq_aCx2v8', '2024-03-08 01:57:23.975438+05');
+INSERT INTO public.django_session VALUES ('8aur57039qkg99pu1jg0cxy7teqq0zmh', '.eJxVjDsOwyAQBe9CHaFdzMekTO8zIGAhOIlAMnYV5e4RkoukfTPz3sz5Yy_u6GlzK7ErQ3b53YKPz1QHoIev98Zjq_u2Bj4UftLOl0bpdTvdv4Piexk1JSKjtEkIE5iYTLAQrADIHrMAmeOMEMlqZdFLhZaUIMg6TkFJObPPF-p8N5k:1rdG8B:UH7QCfya4AiHxvjQs4pW8u8GgiGFFvN8U8Xq_aCx2v8', '2024-03-08 01:57:23.975+05');
+INSERT INTO public.django_session VALUES ('jn4clhlq4ub1ojgbymvpuzuppv8v7xqq', '.eJxVjEEOwiAQRe_C2pCBIgWX7nsGMgyDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwJ3ERSpx-t4j04LqDdMd6a5JaXZc5yl2RB-1yaomf18P9OyjYy7cmA6NiD-Y8KHI2s8-sMZo4QAQHOYFi1KQMZ6e9YY8ONYxWD9YxJRbvD930N_c:1rahiD:LU0moQnQqPgh_B_xlMfgapijJiLsJfzYEwy1fT05f2k', '2024-03-01 00:48:01.688+05');
+INSERT INTO public.django_session VALUES ('kyq4axqu5shwg4mq0rr16finxhb0rgl2', '.eJxVjEEOwiAQRe_C2pCBIgWX7nsGMgyDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwJ3ERSpx-t4j04LqDdMd6a5JaXZc5yl2RB-1yaomf18P9OyjYy7cmA6NiD-Y8KHI2s8-sMZo4QAQHOYFi1KQMZ6e9YY8ONYxWD9YxJRbvD930N_c:1rbv5Z:9xkpb_Oi5rzYu5Ao8CPP1cnSxKVSZq42ywVAeNjq7Go', '2024-03-04 09:17:09.204+05');
+INSERT INTO public.django_session VALUES ('t527da5qf1o4d0dlz7nakbtn4ks1hanl', '.eJxVjDsOwyAQBe9CHaFdzMekTO8zIGAhOIlAMnYV5e4RkoukfTPz3sz5Yy_u6GlzK7ErQ3b53YKPz1QHoIev98Zjq_u2Bj4UftLOl0bpdTvdv4Piexk1JSKjtEkIE5iYTLAQrADIHrMAmeOMEMlqZdFLhZaUIMg6TkFJObPPF-p8N5k:1ridNw:nY5rxmFeuth_h83-J3edM0t9lA1AauHzE0Wx2XNa_Rc', '2024-03-22 21:47:52.467259+05');
+INSERT INTO public.django_session VALUES ('hsd9qvrlclzs6nt7r2ruvd9wj33mb2bk', '.eJxVjDsOwyAQBe9CHaFdzMekTO8zIGAhOIlAMnYV5e4RkoukfTPz3sz5Yy_u6GlzK7ErQ3b53YKPz1QHoIev98Zjq_u2Bj4UftLOl0bpdTvdv4Piexk1JSKjtEkIE5iYTLAQrADIHrMAmeOMEMlqZdFLhZaUIMg6TkFJObPPF-p8N5k:1rifkZ:_AohvENGXQxUaeMYImBVUFGT8T4weuFlQI3mDIWX55U', '2024-03-23 00:19:23.165167+05');
 
 
 --
 -- Data for Name: payment_payment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.payment_payment VALUES (1, '2024-02-18', 2, 250.25, 'non_cash', 7, 9, 1);
-INSERT INTO public.payment_payment VALUES (3, '2024-02-19', 2, 2300.70, 'cash', 8, 9, 1);
-INSERT INTO public.payment_payment VALUES (4, '2024-02-19', 1, 1500.00, 'cash', 8, 9, 1);
+INSERT INTO public.payment_payment VALUES (1, '2024-02-18', 2, 250.25, 'non_cash', 7, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (3, '2024-02-19', 2, 2300.70, 'cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (4, '2024-02-19', 1, 1500.00, 'cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (5, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (6, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (7, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (8, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (9, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (10, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (11, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (12, '2024-03-08', 1, 85902.00, 'non_cash', 8, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (13, '2024-03-10', 1, 2184.42, 'non_cash', 7, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (14, '2024-03-10', 1, 2184.42, 'non_cash', 7, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (15, '2024-03-10', 1, 2184.42, 'non_cash', 7, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (16, '2024-03-10', 1, 2184.42, 'non_cash', 7, 9, 1, false);
+INSERT INTO public.payment_payment VALUES (17, '2024-03-10', 1, 2184.42, 'non_cash', 7, 9, 1, false);
 
 
 --
@@ -623,17 +640,17 @@ INSERT INTO public.payment_payment VALUES (4, '2024-02-19', 1, 1500.00, 'cash', 
 --
 
 INSERT INTO public.subscription_coursesubscription VALUES (2, true, NULL, 2, 1);
-INSERT INTO public.subscription_coursesubscription VALUES (3, true, '2024-02-23', 1, 1);
+INSERT INTO public.subscription_coursesubscription VALUES (4, true, '2024-03-08', 1, 1);
 
 
 --
 -- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users_user VALUES (3, 'pbkdf2_sha256$600000$GjGnHwKD6xg7Sch6tJBCYr$HH6ZvWqc09gzEFy0cvwJMmi6KA6K/1vSBSguZhsGWfA=', NULL, true, '', '', true, true, '2024-02-22 14:38:29.494225+05', 'root2@root.com', NULL, '', '');
+INSERT INTO public.users_user VALUES (3, 'pbkdf2_sha256$600000$GjGnHwKD6xg7Sch6tJBCYr$HH6ZvWqc09gzEFy0cvwJMmi6KA6K/1vSBSguZhsGWfA=', NULL, true, '', '', true, true, '2024-02-22 14:38:29.494+05', 'root2@root.com', NULL, '', '');
 INSERT INTO public.users_user VALUES (4, 'pbkdf2_sha256$600000$cR75FybNccARBEgDqly3FV$Gnak5ywoHwxCnbZClev9IJIZdVMkBU5SfTnLSGxVQxk=', NULL, false, 'Константин', 'Путилов', false, true, '2024-02-22 14:46:46+05', 'putilov.konstantin@gmail.com', '+79827433818', 'Екатеринбург', '');
-INSERT INTO public.users_user VALUES (5, 'pbkdf2_sha256$600000$kCj6Iusl6p6td7czBgL8uJ$JAlD+XX5uA7NmvTINrKoD/dNb1rduPagFAy+lYWf4vM=', NULL, false, '', '', false, true, '2024-02-22 15:34:05.361575+05', 'putilov.constantine@yandex.ru', NULL, '', '');
-INSERT INTO public.users_user VALUES (1, 'pbkdf2_sha256$600000$AQFbGYBDmacEGxFOeiR0wf$nuZxJB2mcBXKSd1dPJJQFi8RcUvZ47hNFa3HxTULydI=', '2024-02-23 01:57:23.973858+05', true, '', '', true, true, '2024-02-16 00:47:30.543258+05', 'root@root.com', '', '', '');
+INSERT INTO public.users_user VALUES (5, 'pbkdf2_sha256$600000$kCj6Iusl6p6td7czBgL8uJ$JAlD+XX5uA7NmvTINrKoD/dNb1rduPagFAy+lYWf4vM=', NULL, false, '', '', false, true, '2024-02-22 15:34:05.361+05', 'putilov.constantine@yandex.ru', NULL, '', '');
+INSERT INTO public.users_user VALUES (1, 'pbkdf2_sha256$600000$AQFbGYBDmacEGxFOeiR0wf$nuZxJB2mcBXKSd1dPJJQFi8RcUvZ47hNFa3HxTULydI=', '2024-03-09 00:19:23.163639+05', true, '', '', true, true, '2024-02-16 00:47:30.543+05', 'root@root.com', '', '', '');
 
 
 --
@@ -701,21 +718,21 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 29, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 30, true);
 
 
 --
 -- Name: payment_payment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.payment_payment_id_seq', 4, true);
+SELECT pg_catalog.setval('public.payment_payment_id_seq', 17, true);
 
 
 --
 -- Name: subscription_coursesubscription_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.subscription_coursesubscription_id_seq', 3, true);
+SELECT pg_catalog.setval('public.subscription_coursesubscription_id_seq', 4, true);
 
 
 --

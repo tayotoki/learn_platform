@@ -3,8 +3,8 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from courses.serializers import CoursePaymentSerializer, LessonListSerializer
-from .constants import PaymentContentType
-from .models import Payment
+from ..constants import PaymentContentType
+from ..models import Payment
 
 
 class PaymentListSerializer(serializers.ModelSerializer):

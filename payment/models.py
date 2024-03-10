@@ -29,3 +29,11 @@ class Payment(PolymorphicModel):
         validators=[MinValueValidator(0)],
     )
     type = models.CharField(verbose_name="Способ оплаты", choices=PaymentType.choices)
+    is_confirmed = models.BooleanField(verbose_name="Подтвержден", default=False)
+
+    class Meta:
+        verbose_name = "Платеж"
+        verbose_name_plural = "Платежи"
+
+    def __str__(self):
+        return f"Платеж {self.amount}"

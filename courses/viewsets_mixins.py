@@ -1,4 +1,5 @@
 from .models import Course
+from .querysets import CourseQuerySet
 
 
 class UserLimitedOrManagerAllMixin:
@@ -7,7 +8,7 @@ class UserLimitedOrManagerAllMixin:
     если запрос выполнил пользователь.
     Если запрос выполнил менеджер - кверисет без фильтра.
     """
-    def get_queryset(self):
+    def get_queryset(self) -> CourseQuerySet:
         queryset = (
             Course.objects
             .select_related("author")

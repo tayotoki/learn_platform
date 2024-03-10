@@ -1,15 +1,18 @@
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet, Exists, OuterRef, Count
 
+
 from subscription.models import CourseSubscription
+from users.models import User
 
 
 class CourseQuerySet(QuerySet):
-    def annotate_subscribe(self, user_id: int) -> "QuerySet":
+    def annotate_subscribe(self, user: User | AnonymousUser) -> "QuerySet":
         return self.annotate(
             is_subscribed=Exists(
                 CourseSubscription.objects.filter(
                     course_id=OuterRef("pk"),
-                    user_id=user_id,
+                    user=user,
                     is_active=True
                 )
             )

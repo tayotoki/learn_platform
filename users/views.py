@@ -1,5 +1,5 @@
 from drf_spectacular.utils import extend_schema
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
@@ -21,13 +21,14 @@ class UserProfileViewSet(
     GenericViewSet
 ):
     serializer_class = UserProfileSerializer
-    queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        queryset = User.objects.all()
+
         if self.action == self.retrieve.__name__:
-            return self.__class__.queryset.prefetch_related("payment_set")
-        return self.__class__.queryset
+            queryset = queryset.prefetch_related("payment_set")
+        return queryset
 
     def get_serializer_class(self):
         if self.action == self.retrieve.__name__:
@@ -42,6 +43,10 @@ class UserProfileViewSet(
             return UpdateUserSerializer
 
         return self.__class__.serializer_class
+
+    @extend_schema(tags=["Profiles"], responses={status.HTTP_200_OK: UserProfileSerializer})
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
     def get_permissions(self):
         permission_classes = self.permission_classes

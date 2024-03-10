@@ -8,7 +8,7 @@ from ..models import Payment
 
 class PaymentFilter(filters.FilterSet):
     content_type = filters.CharFilter(
-        label="Фильтр по типу продукта (course|lesson...)", method="content_type_filter"
+        label="Фильтр по типу продукта (courses|lessons...)", method="content_type_filter"
     )
     type = filters.CharFilter()
     content_object_id = filters.NumberFilter(
